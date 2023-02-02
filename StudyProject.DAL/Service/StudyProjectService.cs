@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudyProject.DAL.Context;
 using StudyProject.DAL.Models;
-using System.Security.Cryptography;
 
 namespace StudyProject.DAL.Service;
 
@@ -42,6 +41,7 @@ public class StudyProjectService : IStudyProjectService
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
+            throw;
         }
     }
     public async Task<List<HumanResult>> GetAllProfileHumansAsync()
@@ -54,10 +54,7 @@ public class StudyProjectService : IStudyProjectService
                 List<Human> humans = await db.Humans.ToListAsync();
                 List<Status> statusList = await db.Statuses.ToListAsync();
 
-                if (humans == null || statusList == null)
-                    throw new Exception("Пришли пустые данные");
-
-                foreach (Human human in humans)
+                foreach(Human human in humans)
                 {
                     foreach(Status status in statusList)
                     {
