@@ -16,7 +16,7 @@ public class ReadStudyProjectController : ControllerBase
         _logger = logger;
     }
         
-    [HttpGet("get-all-profiles-human")]
+    [HttpGet("read-all-profiles-human")]
     public async Task<IActionResult> GetAllProfileHumansAsync()
     {
         var man = await _projectService.GetAllProfileHumansAsync();
@@ -27,7 +27,7 @@ public class ReadStudyProjectController : ControllerBase
         return NoContent();
     }
 
-    [HttpGet("get-profile-human/{id}")]
+    [HttpGet("read-profile-human/{id}")]
     public async Task<IActionResult> GetProfileHumanByIdAsync(int id)
     {
         var man = await _projectService.GetProfileHumanByIdAsync(id);

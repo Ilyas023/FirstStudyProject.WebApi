@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StudyProject.DAL.Models;
 using StudyProject.DAL.Service;
 
 namespace StudyProject.WebApi.Controllers;
@@ -16,11 +17,32 @@ public class DeleteStudyProjectController : ControllerBase
         _logger = logger;
     }
 
+
     [HttpDelete("delete-profile-human/{id}")]
     public async Task<IActionResult> DeleteProfileHuman(int id)
     {
-        await projectService.DeleteProfileHumanById(id);
-        return Ok("qweqw");
+        try
+        {
+            await projectService.DeleteProfileHumanById(id);
+            return Ok($"Пользователь удален с БД");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
+    [HttpDelete("delete-all-profiles")]
+    public async Task<IActionResult> DeleteAllProfileHumans()
+    {
+        try
+        {
+            await projectService.DeleteAllProfileHumans();
+            return Ok("Все пользователи удалены с БД");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

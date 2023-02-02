@@ -117,8 +117,6 @@ public class StudyProjectService
         {
             using(StudyProjectDbContext db = new StudyProjectDbContext())
             {
-
-                var wasd = db.Humans.FirstOrDefaultAsync(h => h.Id == id).Result;
                 db.Humans.Remove(await db.Humans.FirstOrDefaultAsync(h => h.Id == id));
                 await db.SaveChangesAsync();
             }
@@ -128,4 +126,22 @@ public class StudyProjectService
             Console.WriteLine(ex.Message);
         }
     }
+    public async Task DeleteAllProfileHumans()
+    {
+        try
+        {
+            using(StudyProjectDbContext db = new StudyProjectDbContext())
+            {
+                List<Human> humanList = await db.Humans.ToListAsync();
+
+                db.Humans.RemoveRange(humanList);
+                await db.SaveChangesAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
 }
