@@ -1,0 +1,50 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin: 0;
+    height: auto;
+    background-color: wheat;
+}
+
+.Table {
+    margin-top: 12vh;
+    width: max-content;
+    border-color: black;
+    border: solid 0.18rem;
+}
+
+.table-column {
+    display: flex;
+    flex-direction: row;
+}
+
+.block {
+    border: solid 0.1rem black;
+    padding: 0 10px 0 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.block-text {
+    font-size: 19px;
+    font-weight: lighter;
+}
+
+.text-desctription {
+    text-align: left;
+    max-width: 220px;
+}
