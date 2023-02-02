@@ -9,17 +9,19 @@ namespace StudyProject.WebApi.Controllers;
 public class ReadStudyProjectController : ControllerBase
 {
     private readonly ILogger<ReadStudyProjectController> _logger;
-    private StudyProjectService _projectService = new StudyProjectService();
+    private readonly IStudyProjectService _studyProjectService;
 
-    public ReadStudyProjectController(ILogger<ReadStudyProjectController> logger)
+    public ReadStudyProjectController(ILogger<ReadStudyProjectController> logger,
+        IStudyProjectService studyProjectService)
     {
         _logger = logger;
+        _studyProjectService = studyProjectService;
     }
-        
+
     [HttpGet("read-all-profiles-human")]
     public async Task<IActionResult> GetAllProfileHumansAsync()
     {
-        var man = await _projectService.GetAllProfileHumansAsync();
+        var man = await _studyProjectService.GetAllProfileHumansAsync();
 
         if (man != null)
             return Ok(man);
@@ -30,7 +32,7 @@ public class ReadStudyProjectController : ControllerBase
     [HttpGet("read-profile-human/{id}")]
     public async Task<IActionResult> GetProfileHumanByIdAsync(int id)
     {
-        var man = await _projectService.GetProfileHumanByIdAsync(id);
+        var man = await _studyProjectService.GetProfileHumanByIdAsync(id);
 
         if (man != null)
             return Ok(man);

@@ -9,19 +9,22 @@ namespace StudyProject.WebApi.Controllers;
 public class UpdateStudyProjectController : ControllerBase
 {
     private readonly ILogger<UpdateStudyProjectController> _logger;
-    private StudyProjectService projectService = new StudyProjectService();
+    private readonly IStudyProjectService _studyProjectService;
 
-    public UpdateStudyProjectController(ILogger<UpdateStudyProjectController> logger)
+    public UpdateStudyProjectController(ILogger<UpdateStudyProjectController> logger,
+        IStudyProjectService studyProjectService)
     {
         _logger = logger;
+        _studyProjectService = studyProjectService;
     }
+
 
     [HttpPut("update-profile-human/{id}")]
     public async Task<IActionResult> UpdateProfileHumanAsync(int id, [FromBody] Human human)
     {
         try
         {
-            await projectService.PutProfileHumanById(id, human);
+            await _studyProjectService.PutProfileHumanByIdAsync(id, human);
             return Ok($"Пользователь - {human.Name} обновлен в БД");
         }
         catch (Exception ex)

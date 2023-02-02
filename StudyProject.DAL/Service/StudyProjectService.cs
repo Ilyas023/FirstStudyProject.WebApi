@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudyProject.DAL.Context;
 using StudyProject.DAL.Models;
+using System.Security.Cryptography;
 
 namespace StudyProject.DAL.Service;
 
-public class StudyProjectService
+public class StudyProjectService : IStudyProjectService
 {
     public async Task CreateProfileHumanAsync(Human human)
     {
@@ -21,11 +22,12 @@ public class StudyProjectService
         {
             using(StudyProjectDbContext db = new StudyProjectDbContext())
             {
-                Human human = await db.Humans.FirstOrDefaultAsync(h => h.Id == id);
-                Status status = await db.Statuses.FirstOrDefaultAsync(s => s.StatusId == human.StatusId);
+                Human? human = await db.Humans.FirstOrDefaultAsync(h => h.Id == id);
+                Status? status = await db.Statuses.FirstOrDefaultAsync(s => s.StatusId == human.StatusId);
 
                 HumanResult humanResult = new HumanResult()
                 {
+                    Id = human.Id,
                     Name = human.Name,
                     Surname = human.Surname,
                     Age = human.Age,
@@ -37,10 +39,9 @@ public class StudyProjectService
                 return humanResult;
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-
-            throw;
+            Console.WriteLine(ex.Message);
         }
     }
     public async Task<List<HumanResult>> GetAllProfileHumansAsync()
@@ -53,7 +54,10 @@ public class StudyProjectService
                 List<Human> humans = await db.Humans.ToListAsync();
                 List<Status> statusList = await db.Statuses.ToListAsync();
 
-                foreach(Human human in humans)
+                if (humans == null || statusList == null)
+                    throw new Exception("Пришли пустые данные");
+
+                foreach (Human human in humans)
                 {
                     foreach(Status status in statusList)
                     {
@@ -61,6 +65,7 @@ public class StudyProjectService
                         {
                             HumanResult humanResult = new HumanResult()
                             {
+                                Id = human.Id,
                                 Name = human.Name,
                                 Surname = human.Surname,
                                 Age = human.Age,
@@ -84,7 +89,7 @@ public class StudyProjectService
         }
     }
 
-    public async Task PutProfileHumanById(int id, Human humanUpd)
+    public async Task PutProfileHumanByIdAsync(int id, Human humanUpd)
     {
         try
         {
@@ -111,7 +116,7 @@ public class StudyProjectService
         }
     }
 
-    public async Task DeleteProfileHumanById(int id)
+    public async Task DeleteProfileHumanByIdAsync(int id)
     {
         try
         {
@@ -126,7 +131,7 @@ public class StudyProjectService
             Console.WriteLine(ex.Message);
         }
     }
-    public async Task DeleteAllProfileHumans()
+    public async Task DeleteAllProfileHumanAsync()
     {
         try
         {

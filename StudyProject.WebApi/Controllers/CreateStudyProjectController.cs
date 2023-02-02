@@ -9,11 +9,13 @@ namespace StudyProject.WebApi.Controllers;
 public class CreateStudyProjectController : ControllerBase
 {
     private readonly ILogger<CreateStudyProjectController> _logger;
-    private StudyProjectService projectService = new StudyProjectService();
+    private readonly IStudyProjectService _studyProjectService;
 
-    public CreateStudyProjectController(ILogger<CreateStudyProjectController> logger)
+    public CreateStudyProjectController(ILogger<CreateStudyProjectController> logger, 
+        IStudyProjectService studyProjectService)
     {
         _logger = logger;
+        _studyProjectService = studyProjectService;
     }
 
     [HttpPost("post-profile-human")]
@@ -21,7 +23,7 @@ public class CreateStudyProjectController : ControllerBase
     {
         try
         {
-            await projectService.CreateProfileHumanAsync(human);
+            await _studyProjectService.CreateProfileHumanAsync(human);
             return Ok($"Профиль - {human.Name} добавился в БД");
         }
         catch (Exception ex)

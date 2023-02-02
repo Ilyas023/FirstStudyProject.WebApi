@@ -10,20 +10,21 @@ namespace StudyProject.WebApi.Controllers;
 public class DeleteStudyProjectController : ControllerBase
 {
     private readonly ILogger<DeleteStudyProjectController> _logger;
-    StudyProjectService projectService = new StudyProjectService();
+    private readonly IStudyProjectService _studyProjectService;
 
-    public DeleteStudyProjectController(ILogger<DeleteStudyProjectController> logger)
+    public DeleteStudyProjectController(ILogger<DeleteStudyProjectController> logger,
+        IStudyProjectService studyProjectService)
     {
         _logger = logger;
+        _studyProjectService = studyProjectService;
     }
-
 
     [HttpDelete("delete-profile-human/{id}")]
     public async Task<IActionResult> DeleteProfileHuman(int id)
     {
         try
         {
-            await projectService.DeleteProfileHumanById(id);
+            await _studyProjectService.DeleteProfileHumanByIdAsync(id);
             return Ok($"Пользователь удален с БД");
         }
         catch (Exception ex)
@@ -33,11 +34,11 @@ public class DeleteStudyProjectController : ControllerBase
     }
 
     [HttpDelete("delete-all-profiles")]
-    public async Task<IActionResult> DeleteAllProfileHumans()
+    public async Task<IActionResult> DeleteAllProfileHumansAsync()
     {
         try
         {
-            await projectService.DeleteAllProfileHumans();
+            await _studyProjectService.DeleteAllProfileHumanAsync();
             return Ok("Все пользователи удалены с БД");
         }
         catch (Exception ex)
