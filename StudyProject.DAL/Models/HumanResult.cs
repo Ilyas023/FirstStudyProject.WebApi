@@ -2,9 +2,5 @@
 
 public class HumanResult : Human
 {
-    public HumanResult()
-    {
-    }
-
     public string DescriptionStatus { get; set; } = null!;
 }

@@ -6,25 +6,26 @@ namespace StudyProject.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CreateStudyProjectController : ControllerBase
+public class UpdateStudyProjectController : ControllerBase
 {
-    private readonly ILogger<CreateStudyProjectController> _logger;
+    private readonly ILogger<UpdateStudyProjectController> _logger;
     private readonly IStudyProjectService _studyProjectService;
 
-    public CreateStudyProjectController(ILogger<CreateStudyProjectController> logger, 
+    public UpdateStudyProjectController(ILogger<UpdateStudyProjectController> logger,
         IStudyProjectService studyProjectService)
     {
         _logger = logger;
         _studyProjectService = studyProjectService;
     }
 
-    [HttpPost("post-profile-human")]
-    public async Task<IActionResult> CreateProfileHumanAsync([FromBody] Human human)
+
+    [HttpPut("update-profile-human/{id}")]
+    public async Task<IActionResult> UpdateProfileHumanAsync(int id, [FromBody] Human human)
     {
         try
         {
-            await _studyProjectService.CreateProfileHumanAsync(human);
-            return Ok($"Профиль - {human.Name} добавился в БД");
+            await _studyProjectService.PutProfileHumanByIdAsync(id, human);
+            return Ok($"Пользователь - {human.Name} обновлен в БД");
         }
         catch (Exception ex)
         {
