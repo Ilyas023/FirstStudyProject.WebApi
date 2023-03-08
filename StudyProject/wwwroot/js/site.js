@@ -1,4 +1,14 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿//const uri = 'api/ReadStudyProject/read-all-profiles-human';
+//let humans = [];
 
-// Write your JavaScript code.
+//function getProfileHumans(){
+//    fetch(uri)
+//        .then(response => response.json())
+//        .then(data => _displayItems(data))
+//        .catch(error => console.error('Ошибка при получений: ', error));
+//}
+
+//humans = getProfileHumans();
+//for (var i = 0; i < humans.length; i++) {
+//    console.log(humans);
+//}

@@ -3,7 +3,8 @@
 }
 
 <Center>
-    <Div class="Table">
+    <button id="btnGetAll">Get all Humans</button><br/>
+    <div class="Table">
         <div class="table-column">
             <div class="block">
                 <div class="block-text">ID:&nbsp;</div>
@@ -34,5 +35,24 @@
                 <div class="block-text text-desctription">Знакомы с колледжа</div>
             </div>
         </div>
-    </Div>
+    </div>
+
+
 </Center>
+
+<script type="text/javascript">
+    var serviceUrl = 'http://mywebservice/api/test';
+
+    function sendRequest() {
+        var method = $('#method').val();
+
+        $.ajax({
+            type: method,
+            url: serviceUrl
+        }).done(function (data) {
+            $('#value1').text(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            $('#value1').text(jqXHR.responseText || textStatus);
+        });
+    }
+</script>
